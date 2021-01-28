@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-public class CalculateUI {
+public class CalculaterUI {
 	
 	private Composite compositeCalculator;
 	private CTabItem calculateTab;
@@ -19,7 +19,7 @@ public class CalculateUI {
 	private Text firstOperand;
 	private Text secondOperand;
 	private Text resultText;
-	private Combo combo;
+	private Combo operations;
 	private Button checkBox;
 	private Button calculateButton;
 	private Label resultLabel;
@@ -30,7 +30,7 @@ public class CalculateUI {
 	private GridData resultTextData;
 	private GridData resultLabelData;
 	
-	public void createCalculateUI(CTabFolder parent) {
+	public void createCalculaterUI(CTabFolder parent) {
 		
 		compositeCalculator = new Composite(parent, SWT.NONE);
 		compositeCalculator.setLayout(new GridLayout(3, false));
@@ -43,10 +43,10 @@ public class CalculateUI {
 		firstOperand = new Text(compositeCalculator, SWT.BORDER);
 		firstOperand.setLayoutData(operandsData);
 
-		combo = new Combo(compositeCalculator, SWT.DROP_DOWN);
-		combo.setItems(new String[] { "+", "-", "*", "/" });
-		combo.select(0);
-		combo.setLayoutData(operandsData);
+		operations = new Combo(compositeCalculator, SWT.DROP_DOWN);
+		operations.setItems(new String[] { "+", "-", "*", "/" });
+		operations.select(0);
+		operations.setLayoutData(operandsData);
 
 		secondOperand = new Text(compositeCalculator, SWT.BORDER);
 		secondOperand.setLayoutData(operandsData);
@@ -79,5 +79,4 @@ public class CalculateUI {
 		resultTextData.horizontalIndent = -35;
 		resultText.setLayoutData(resultTextData);
 	}
-
 }

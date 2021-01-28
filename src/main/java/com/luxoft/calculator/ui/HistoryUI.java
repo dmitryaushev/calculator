@@ -34,5 +34,4 @@ public class HistoryUI {
 		clear = new Button(compositeHistory, SWT.PUSH);
 		clear.setText("clear");
 	}
-
 }
