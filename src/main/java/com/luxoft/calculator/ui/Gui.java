@@ -25,7 +25,7 @@ public class Gui {
 		new HistoryUI().createHistotyUI(folder);
 
 		shell.pack();
-		shell.setSize(500, 500);
+		shell.setMinimumSize(300, 320);
 		shell.open();
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {

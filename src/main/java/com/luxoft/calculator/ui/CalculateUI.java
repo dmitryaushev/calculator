@@ -24,8 +24,11 @@ public class CalculateUI {
 	private Button calculateButton;
 	private Label resultLabel;
 	
-	private GridData checkBoxData;
 	private GridData operandsData;
+	private GridData checkBoxData;
+	private GridData calculateButtonData;
+	private GridData resultTextData;
+	private GridData resultLabelData;
 	
 	public void createCalculateUI(CTabFolder parent) {
 		
@@ -35,7 +38,7 @@ public class CalculateUI {
 		calculateTab.setText("calculator");
 		calculateTab.setControl(compositeCalculator);
 		
-		operandsData = new GridData(GridData.VERTICAL_ALIGN_FILL);
+		operandsData = new GridData(GridData.FILL_BOTH);
 
 		firstOperand = new Text(compositeCalculator, SWT.BORDER);
 		firstOperand.setLayoutData(operandsData);
@@ -48,8 +51,9 @@ public class CalculateUI {
 		secondOperand = new Text(compositeCalculator, SWT.BORDER);
 		secondOperand.setLayoutData(operandsData);
 
-		checkBoxData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+		checkBoxData = new GridData(GridData.FILL_BOTH);
 		checkBoxData.horizontalSpan = 2;
+		checkBoxData.verticalIndent = 100;
 
 		checkBox = new Button(compositeCalculator, SWT.CHECK);
 		checkBox.setText("calculate on the fly");
@@ -57,13 +61,23 @@ public class CalculateUI {
 
 		calculateButton = new Button(compositeCalculator, SWT.PUSH);
 		calculateButton.setText("calculate");
-		calculateButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
+		calculateButtonData = new GridData(GridData.FILL_BOTH);
+		calculateButtonData.verticalIndent = 100;
+		calculateButton.setLayoutData(calculateButtonData);
 
 		resultLabel = new Label(compositeCalculator, SWT.NONE);
 		resultLabel.setText("result:");
+		resultLabelData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+		resultLabelData.verticalIndent = 20;
+		resultLabel.setLayoutData(resultLabelData);
+		
 		resultText = new Text(compositeCalculator, SWT.BORDER);
 		resultText.setEditable(false);
-		resultText.setLayoutData(checkBoxData);
+		resultTextData = new GridData(GridData.FILL_BOTH);
+		resultTextData.horizontalSpan = 2;
+		resultTextData.verticalIndent = 20;
+		resultTextData.horizontalIndent = -35;
+		resultText.setLayoutData(resultTextData);
 	}
 
 }
