@@ -1,7 +1,5 @@
 package com.luxoft.calculator.ui;
 
-import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -13,15 +11,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import com.luxoft.calculator.model.Operation;
-import com.luxoft.calculator.service.HistoryService;
-import com.luxoft.calculator.service.SimpleCalculator;
-
 public class CalculatorUI {
-	
+
 	private Composite compositeCalculator;
 	private CTabItem calculateTab;
-	
+
 	private Text firstOperand;
 	private Text secondOperand;
 	private Text resultText;
@@ -29,29 +23,45 @@ public class CalculatorUI {
 	private Button checkBox;
 	private Button calculateButton;
 	private Label resultLabel;
-	
+
 	private GridData operandsData;
 	private GridData checkBoxData;
 	private GridData calculateButtonData;
 	private GridData resultTextData;
 	private GridData resultLabelData;
-	
-	private HistoryService historyService;
-	private SimpleCalculator simpleCalculator;
-	
-	public CalculatorUI(HistoryService historyService, SimpleCalculator simpleCalculator) {
-		this.historyService = historyService;
-		this.simpleCalculator = simpleCalculator;
-	};
-	
+
+	public Text getFirstOperand() {
+		return firstOperand;
+	}
+
+	public Text getSecondOperand() {
+		return secondOperand;
+	}
+
+	public Text getResultText() {
+		return resultText;
+	}
+
+	public Combo getOperations() {
+		return operations;
+	}
+
+	public Button getCheckBox() {
+		return checkBox;
+	}
+
+	public Button getCalculateButton() {
+		return calculateButton;
+	}
+
 	public void createCalculatorUI(CTabFolder parent) {
-		
+
 		compositeCalculator = new Composite(parent, SWT.NONE);
 		compositeCalculator.setLayout(new GridLayout(3, false));
 		calculateTab = new CTabItem(parent, SWT.NONE);
 		calculateTab.setText("calculator");
 		calculateTab.setControl(compositeCalculator);
-		
+
 		operandsData = new GridData(GridData.FILL_BOTH);
 
 		firstOperand = new Text(compositeCalculator, SWT.BORDER);
@@ -84,7 +94,7 @@ public class CalculatorUI {
 		resultLabelData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		resultLabelData.verticalIndent = 20;
 		resultLabel.setLayoutData(resultLabelData);
-		
+
 		resultText = new Text(compositeCalculator, SWT.BORDER);
 		resultText.setEditable(false);
 		resultTextData = new GridData(GridData.FILL_BOTH);
@@ -92,65 +102,5 @@ public class CalculatorUI {
 		resultTextData.verticalIndent = 20;
 		resultTextData.horizontalIndent = -35;
 		resultText.setLayoutData(resultTextData);
-	}
-	
-	public void createCalculatorEvents() {
-		
-		calculateButton.addSelectionListener(widgetSelectedAdapter(event -> {
-			double result = simpleCalculator.calculate(mapOperation(firstOperand, secondOperand, operations));
-			resultText.setText(String.valueOf(result));
-			historyService.saveHistory(String.valueOf(result));
-		}));
-		
-		checkBox.addSelectionListener(widgetSelectedAdapter(event -> {
-			if (checkBox.getSelection()) {
-				calculateButton.setEnabled(false);
-				if (!firstOperand.getText().isEmpty() && !secondOperand.getText().isEmpty()) {
-					double result = simpleCalculator.calculate(mapOperation(firstOperand, secondOperand, operations));
-					resultText.setText(String.valueOf(result));
-					historyService.saveHistory(String.valueOf(result));
-				}
-			} else {
-				calculateButton.setEnabled(true);
-				resultText.setText("");
-			}
-		}));
-
-		firstOperand.addListener(SWT.KeyUp, event -> {
-			if (checkBox.getSelection()) {
-				if (!secondOperand.getText().isEmpty()) {
-					double result = simpleCalculator.calculate(mapOperation(firstOperand, secondOperand, operations));
-					resultText.setText(String.valueOf(result));
-					historyService.saveHistory(String.valueOf(result));
-				}
-			}
-		});
-		
-		secondOperand.addListener(SWT.KeyUp, event -> {
-			if (checkBox.getSelection()) {
-				if (!firstOperand.getText().isEmpty()) {
-					double result = simpleCalculator.calculate(mapOperation(firstOperand, secondOperand, operations));
-					resultText.setText(String.valueOf(result));
-					historyService.saveHistory(String.valueOf(result));
-				}
-			}
-		});
-		
-		operations.addListener(SWT.Selection, event -> {
-			if (checkBox.getSelection()) {
-				double result = simpleCalculator.calculate(mapOperation(firstOperand, secondOperand, operations));
-				resultText.setText(String.valueOf(result));
-				historyService.saveHistory(String.valueOf(result));
-			}
-		});
-	}
-	
-	private Operation mapOperation(Text firstOperandText, Text secondOperandText, Combo operations) {
-		
-		double firstOperand = Double.valueOf(firstOperandText.getText());
-		double secondOperand = Double.valueOf(secondOperandText.getText());
-		String operationSymbol = operations.getText();
-		
-		return new Operation(firstOperand, secondOperand, operationSymbol);
 	}
 }

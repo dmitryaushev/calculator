@@ -13,22 +13,23 @@ public class ViewManager {
 	private static ViewManager viewManager;
 	
 	private CalculatorUI calculatorUI;
+	private CalculatorUISupport calculatorUISupport;
 	private HistoryUI historyUI;
-	//CalculatorUISupport
-	//HistoryUISupport
-	//HistoryModel
+	private HistoryUISupport historyUISupport;
 
 	public void createUI(Shell shell) {
-		this.calculatorUI = new CalculatorUI(new HistoryServiceImpl(), new SimpleCalculatorImpl());
-		this.historyUI = new HistoryUI(new HistoryServiceImpl());
+		this.calculatorUI = new CalculatorUI();
+		this.calculatorUISupport = new CalculatorUISupport(calculatorUI, new HistoryServiceImpl(), new SimpleCalculatorImpl());
+		this.historyUI = new HistoryUI();
+		this.historyUISupport = new HistoryUISupport(historyUI, new HistoryServiceImpl());
 		
 		CTabFolder folder = new CTabFolder(shell, SWT.BORDER);
 		folder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 		calculatorUI.createCalculatorUI(folder);
-		calculatorUI.createCalculatorEvents();
+		calculatorUISupport.createCalculatorListeners();
 		historyUI.createHistotyUI(folder);
-		historyUI.createHistoryEvents();
+		historyUISupport.createHistoryListeners();
 	}
 	
 	public static ViewManager getInstance() {
