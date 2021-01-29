@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import org.eclipse.swt.widgets.List;
 
-import com.luxoft.calculator.model.History;
+import com.luxoft.calculator.model.HistoryModel;
 import com.luxoft.calculator.service.HistoryService;
 import com.luxoft.calculator.ui.HistoryUI;
 import com.luxoft.calculator.ui.ViewManager;
@@ -12,7 +12,7 @@ import com.luxoft.calculator.ui.ViewManager;
 public class HistoryServiceImpl implements HistoryService{
 	
 	public void saveHistory(String result) {
-		History history = History.getInstance();
+		HistoryModel history = HistoryModel.getInstance();
 		LinkedList<String> results = history.getResults();
 		results.add(result);
 		history.setResults(results);
@@ -23,7 +23,7 @@ public class HistoryServiceImpl implements HistoryService{
 	}
 	
 	public void clearHistoty() {
-		History history = History.getInstance();
+		HistoryModel history = HistoryModel.getInstance();
 		LinkedList<String> results = history.getResults();
 		results.clear();
 		

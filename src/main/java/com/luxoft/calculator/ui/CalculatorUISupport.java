@@ -7,7 +7,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 
-import com.luxoft.calculator.model.Operation;
+import com.luxoft.calculator.model.OperationModel;
 import com.luxoft.calculator.service.HistoryService;
 import com.luxoft.calculator.service.SimpleCalculator;
 
@@ -82,12 +82,12 @@ public class CalculatorUISupport {
 		});
 	}
 
-	private Operation mapOperation(Text firstOperandText, Text secondOperandText, Combo operations) {
+	private OperationModel mapOperation(Text firstOperandText, Text secondOperandText, Combo operations) {
 
 		double firstOperand = Double.valueOf(firstOperandText.getText());
 		double secondOperand = Double.valueOf(secondOperandText.getText());
 		String operationSymbol = operations.getText();
 
-		return new Operation(firstOperand, secondOperand, operationSymbol);
+		return new OperationModel(firstOperand, secondOperand, operationSymbol);
 	}
 }

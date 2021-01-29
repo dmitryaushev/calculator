@@ -1,32 +1,32 @@
 package com.luxoft.calculator.service.impl;
 
-import com.luxoft.calculator.model.Operation;
+import com.luxoft.calculator.model.OperationModel;
 import com.luxoft.calculator.service.SimpleCalculator;
 
 public class SimpleCalculatorImpl implements SimpleCalculator {
 
 	@Override
-	public double addition(Operation operation) {
+	public double addition(OperationModel operation) {
 		return operation.getFirstOperand() + operation.getSecondOperand();
 	}
 
 	@Override
-	public double subtraction(Operation operation) {
+	public double subtraction(OperationModel operation) {
 		return operation.getFirstOperand() - operation.getSecondOperand();
 	}
 
 	@Override
-	public double multiplication(Operation operation) {
+	public double multiplication(OperationModel operation) {
 		return operation.getFirstOperand() * operation.getSecondOperand();
 	}
 
 	@Override
-	public double division(Operation operation) {
+	public double division(OperationModel operation) {
 		return operation.getFirstOperand() / operation.getSecondOperand();
 	}
 
 	@Override
-	public double calculate(Operation operation) {
+	public double calculate(OperationModel operation) {
 		double result = 0;
 		switch (operation.getOperationSymbol()) {
 		case "+":

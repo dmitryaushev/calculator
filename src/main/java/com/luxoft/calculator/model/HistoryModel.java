@@ -2,15 +2,15 @@ package com.luxoft.calculator.model;
 
 import java.util.LinkedList;
 
-public class History {
+public class HistoryModel {
 	
-	private static History history;
+	private static HistoryModel history;
 	
 	private LinkedList<String> results = new LinkedList<String>();
 	
-	public static History getInstance() {
+	public static HistoryModel getInstance() {
 		if (history == null) {
-			history = new History();
+			history = new HistoryModel();
 		}
 		return history;
 	}

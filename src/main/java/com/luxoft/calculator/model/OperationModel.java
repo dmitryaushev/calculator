@@ -1,14 +1,14 @@
 package com.luxoft.calculator.model;
 
-public class Operation {
+public class OperationModel {
 
 	private double firstOperand;
 	private double secondOperand;
 	private String operationSymbol;
 	
-	public Operation() {}
+	public OperationModel() {}
 	
-	public Operation(double firstOperand, double secondOperand, String operationSymbol) {
+	public OperationModel(double firstOperand, double secondOperand, String operationSymbol) {
 		super();
 		this.firstOperand = firstOperand;
 		this.secondOperand = secondOperand;
