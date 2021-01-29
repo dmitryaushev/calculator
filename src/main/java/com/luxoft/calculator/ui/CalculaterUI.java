@@ -1,5 +1,7 @@
 package com.luxoft.calculator.ui;
 
+import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -10,6 +12,9 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+
+import com.luxoft.calculator.service.Calculator;
+import com.luxoft.calculator.service.HistoryService;
 
 public class CalculaterUI {
 	
@@ -29,6 +34,12 @@ public class CalculaterUI {
 	private GridData calculateButtonData;
 	private GridData resultTextData;
 	private GridData resultLabelData;
+	
+	private HistoryService historyService;
+	
+	public CalculaterUI(HistoryService historyService) {
+		this.historyService = historyService;
+	};
 	
 	public void createCalculaterUI(CTabFolder parent) {
 		
@@ -78,5 +89,56 @@ public class CalculaterUI {
 		resultTextData.verticalIndent = 20;
 		resultTextData.horizontalIndent = -35;
 		resultText.setLayoutData(resultTextData);
+	}
+	
+	public void createCalculatorEvents() {
+		
+		calculateButton.addSelectionListener(widgetSelectedAdapter(event -> {
+			String result = Calculator.calculate(firstOperand, secondOperand, operations);
+			resultText.setText(result);
+			historyService.saveHistory(result);
+		}));
+		
+		checkBox.addSelectionListener(widgetSelectedAdapter(event -> {
+			if (checkBox.getSelection()) {
+				calculateButton.setEnabled(false);
+				if (!firstOperand.getText().isEmpty() && !secondOperand.getText().isEmpty()) {
+					String result = Calculator.calculate(firstOperand, secondOperand, operations);
+					resultText.setText(result);
+					historyService.saveHistory(result);
+				}
+			} else {
+				calculateButton.setEnabled(true);
+				resultText.setText("");
+			}
+		}));
+
+		firstOperand.addListener(SWT.KeyUp, event -> {
+			if (checkBox.getSelection()) {
+				if (!secondOperand.getText().isEmpty()) {
+					String result = Calculator.calculate(firstOperand, secondOperand, operations);
+					resultText.setText(result);
+					historyService.saveHistory(result);
+				}
+			}
+		});
+		
+		secondOperand.addListener(SWT.KeyUp, event -> {
+			if (checkBox.getSelection()) {
+				if (!firstOperand.getText().isEmpty()) {
+					String result = Calculator.calculate(firstOperand, secondOperand, operations);
+					resultText.setText(result);
+					historyService.saveHistory(result);
+				}
+			}
+		});
+		
+		operations.addListener(SWT.Selection, event -> {
+			if (checkBox.getSelection()) {
+				String result = Calculator.calculate(firstOperand, secondOperand, operations);
+				resultText.setText(result);
+				historyService.saveHistory(result);
+			}
+		});
 	}
 }
