@@ -6,23 +6,27 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Shell;
 
 import com.luxoft.calculator.service.impl.HistoryServiceImpl;
+import com.luxoft.calculator.service.impl.SimpleCalculatorImpl;
 
 public class ViewManager {
 		
 	private static ViewManager viewManager;
 	
-	private CalculaterUI calculateUI;
+	private CalculatorUI calculatorUI;
 	private HistoryUI historyUI;
+	//CalculatorUISupport
+	//HistoryUISupport
+	//HistoryModel
 
 	public void createUI(Shell shell) {
-		this.calculateUI = new CalculaterUI(new HistoryServiceImpl());
+		this.calculatorUI = new CalculatorUI(new HistoryServiceImpl(), new SimpleCalculatorImpl());
 		this.historyUI = new HistoryUI(new HistoryServiceImpl());
 		
 		CTabFolder folder = new CTabFolder(shell, SWT.BORDER);
 		folder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		calculateUI.createCalculaterUI(folder);
-		calculateUI.createCalculatorEvents();
+		calculatorUI.createCalculatorUI(folder);
+		calculatorUI.createCalculatorEvents();
 		historyUI.createHistotyUI(folder);
 		historyUI.createHistoryEvents();
 	}
@@ -34,8 +38,8 @@ public class ViewManager {
 		return viewManager;
 	}
 
-	public CalculaterUI getCalculateUI() {
-		return calculateUI;
+	public CalculatorUI getCalculateUI() {
+		return calculatorUI;
 	}
 
 

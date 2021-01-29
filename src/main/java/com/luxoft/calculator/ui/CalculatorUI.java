@@ -13,10 +13,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import com.luxoft.calculator.service.Calculator;
+import com.luxoft.calculator.model.Operation;
 import com.luxoft.calculator.service.HistoryService;
+import com.luxoft.calculator.service.SimpleCalculator;
 
-public class CalculaterUI {
+public class CalculatorUI {
 	
 	private Composite compositeCalculator;
 	private CTabItem calculateTab;
@@ -36,12 +37,14 @@ public class CalculaterUI {
 	private GridData resultLabelData;
 	
 	private HistoryService historyService;
+	private SimpleCalculator simpleCalculator;
 	
-	public CalculaterUI(HistoryService historyService) {
+	public CalculatorUI(HistoryService historyService, SimpleCalculator simpleCalculator) {
 		this.historyService = historyService;
+		this.simpleCalculator = simpleCalculator;
 	};
 	
-	public void createCalculaterUI(CTabFolder parent) {
+	public void createCalculatorUI(CTabFolder parent) {
 		
 		compositeCalculator = new Composite(parent, SWT.NONE);
 		compositeCalculator.setLayout(new GridLayout(3, false));
@@ -94,18 +97,18 @@ public class CalculaterUI {
 	public void createCalculatorEvents() {
 		
 		calculateButton.addSelectionListener(widgetSelectedAdapter(event -> {
-			String result = Calculator.calculate(firstOperand, secondOperand, operations);
-			resultText.setText(result);
-			historyService.saveHistory(result);
+			double result = simpleCalculator.calculate(mapOperation(firstOperand, secondOperand, operations));
+			resultText.setText(String.valueOf(result));
+			historyService.saveHistory(String.valueOf(result));
 		}));
 		
 		checkBox.addSelectionListener(widgetSelectedAdapter(event -> {
 			if (checkBox.getSelection()) {
 				calculateButton.setEnabled(false);
 				if (!firstOperand.getText().isEmpty() && !secondOperand.getText().isEmpty()) {
-					String result = Calculator.calculate(firstOperand, secondOperand, operations);
-					resultText.setText(result);
-					historyService.saveHistory(result);
+					double result = simpleCalculator.calculate(mapOperation(firstOperand, secondOperand, operations));
+					resultText.setText(String.valueOf(result));
+					historyService.saveHistory(String.valueOf(result));
 				}
 			} else {
 				calculateButton.setEnabled(true);
@@ -116,9 +119,9 @@ public class CalculaterUI {
 		firstOperand.addListener(SWT.KeyUp, event -> {
 			if (checkBox.getSelection()) {
 				if (!secondOperand.getText().isEmpty()) {
-					String result = Calculator.calculate(firstOperand, secondOperand, operations);
-					resultText.setText(result);
-					historyService.saveHistory(result);
+					double result = simpleCalculator.calculate(mapOperation(firstOperand, secondOperand, operations));
+					resultText.setText(String.valueOf(result));
+					historyService.saveHistory(String.valueOf(result));
 				}
 			}
 		});
@@ -126,19 +129,28 @@ public class CalculaterUI {
 		secondOperand.addListener(SWT.KeyUp, event -> {
 			if (checkBox.getSelection()) {
 				if (!firstOperand.getText().isEmpty()) {
-					String result = Calculator.calculate(firstOperand, secondOperand, operations);
-					resultText.setText(result);
-					historyService.saveHistory(result);
+					double result = simpleCalculator.calculate(mapOperation(firstOperand, secondOperand, operations));
+					resultText.setText(String.valueOf(result));
+					historyService.saveHistory(String.valueOf(result));
 				}
 			}
 		});
 		
 		operations.addListener(SWT.Selection, event -> {
 			if (checkBox.getSelection()) {
-				String result = Calculator.calculate(firstOperand, secondOperand, operations);
-				resultText.setText(result);
-				historyService.saveHistory(result);
+				double result = simpleCalculator.calculate(mapOperation(firstOperand, secondOperand, operations));
+				resultText.setText(String.valueOf(result));
+				historyService.saveHistory(String.valueOf(result));
 			}
 		});
+	}
+	
+	private Operation mapOperation(Text firstOperandText, Text secondOperandText, Combo operations) {
+		
+		double firstOperand = Double.valueOf(firstOperandText.getText());
+		double secondOperand = Double.valueOf(secondOperandText.getText());
+		String operationSymbol = operations.getText();
+		
+		return new Operation(firstOperand, secondOperand, operationSymbol);
 	}
 }
