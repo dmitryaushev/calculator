@@ -13,8 +13,6 @@ import org.eclipse.swt.widgets.Text;
 import com.luxoft.calculator.exception.InvalidInputException;
 import com.luxoft.calculator.model.CalculationModel;
 import com.luxoft.calculator.model.ModelManager;
-import com.luxoft.calculator.service.HistoryService;
-import com.luxoft.calculator.service.SimpleCalculator;
 
 public class CalculatorUISupport {
 

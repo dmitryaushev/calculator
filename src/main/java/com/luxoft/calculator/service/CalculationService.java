@@ -27,5 +27,10 @@ public class CalculationService implements Observer{
 	private void calculation(CalculationModel calculationModel) {
 		String result = String.valueOf(simpleCalculator.calculate(calculationModel));
 		viewManager.getCalculateUI().getResultText().setText(result);
+		saveHistory(result);
+	}
+	
+	private void saveHistory(String result) {
+		viewManager.getHistoryUI().getHistory().add(result);
 	}
 }

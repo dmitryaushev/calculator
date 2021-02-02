@@ -6,8 +6,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Shell;
 
 import com.luxoft.calculator.model.ModelManager;
-import com.luxoft.calculator.service.impl.HistoryServiceImpl;
-import com.luxoft.calculator.service.impl.SimpleCalculatorImpl;
 
 public class ViewManager {
 
@@ -34,7 +32,7 @@ public class ViewManager {
 		calculatorUISupport.createCalculatorListeners();
 		
 		this.historyUI = new HistoryUI();
-		this.historyUISupport = new HistoryUISupport(historyUI, new HistoryServiceImpl());
+		this.historyUISupport = new HistoryUISupport(historyUI);
 		historyUI.createHistotyUI(folder);
 		historyUISupport.createHistoryListeners();
 		
