@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 
+import com.luxoft.calculator.exception.InvalidInputException;
 import com.luxoft.calculator.model.CalculationModel;
 import com.luxoft.calculator.model.ModelManager;
 import com.luxoft.calculator.service.HistoryService;
@@ -35,24 +36,26 @@ public class CalculatorUISupport {
 		Button calculateButton = calculatorUI.getCalculateButton();
 
 		calculateButton.addSelectionListener(widgetSelectedAdapter(event -> {
-			if (validateOperands(firstOperand, secondOperand)) {
-				resultText.setText(String.valueOf("invalid input"));
-				return;
+			try {
+				validateOperands(firstOperand, secondOperand);					
+				Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
+				calculationModel.setParameters(parameters);
+			} catch (InvalidInputException e) {
+				resultText.setText(String.valueOf(e.getMessage()));
 			}
-			Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-			calculationModel.setParameters(parameters);
 		}));
 
 		checkBox.addSelectionListener(widgetSelectedAdapter(event -> {
 			if (checkBox.getSelection()) {
 				calculateButton.setEnabled(false);
 				if (!firstOperand.getText().isEmpty() && !secondOperand.getText().isEmpty()) {
-					if (validateOperands(firstOperand, secondOperand)) {
-						resultText.setText(String.valueOf("invalid input"));
-						return;
+					try {
+						validateOperands(firstOperand, secondOperand);					
+						Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
+						calculationModel.setParameters(parameters);
+					} catch (InvalidInputException e) {
+						resultText.setText(String.valueOf(e.getMessage()));
 					}
-					Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-					calculationModel.setParameters(parameters);
 				}
 			} else {
 				calculateButton.setEnabled(true);
@@ -63,12 +66,13 @@ public class CalculatorUISupport {
 		firstOperand.addListener(SWT.KeyUp, event -> {
 			if (checkBox.getSelection()) {
 				if (!secondOperand.getText().isEmpty()) {
-					if (validateOperands(firstOperand, secondOperand)) {
-						resultText.setText(String.valueOf("invalid input"));
-						return;
+					try {
+						validateOperands(firstOperand, secondOperand);					
+						Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
+						calculationModel.setParameters(parameters);
+					} catch (InvalidInputException e) {
+						resultText.setText(String.valueOf(e.getMessage()));
 					}
-					Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-					calculationModel.setParameters(parameters);
 				}
 			}
 		});
@@ -76,24 +80,26 @@ public class CalculatorUISupport {
 		secondOperand.addListener(SWT.KeyUp, event -> {
 			if (checkBox.getSelection()) {
 				if (!firstOperand.getText().isEmpty()) {
-					if (validateOperands(firstOperand, secondOperand)) {
-						resultText.setText(String.valueOf("invalid input"));
-						return;
+					try {
+						validateOperands(firstOperand, secondOperand);					
+						Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
+						calculationModel.setParameters(parameters);
+					} catch (InvalidInputException e) {
+						resultText.setText(String.valueOf(e.getMessage()));
 					}
-					Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-					calculationModel.setParameters(parameters);
 				}
 			}
 		});
 
 		operations.addListener(SWT.Selection, event -> {
 			if (checkBox.getSelection()) {
-				if (validateOperands(firstOperand, secondOperand)) {
-					resultText.setText(String.valueOf("invalid input"));
-					return;
+				try {
+					validateOperands(firstOperand, secondOperand);					
+					Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
+					calculationModel.setParameters(parameters);
+				} catch (InvalidInputException e) {
+					resultText.setText(String.valueOf(e.getMessage()));
 				}
-				Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-				calculationModel.setParameters(parameters);
 			}
 		});
 	}
@@ -106,7 +112,9 @@ public class CalculatorUISupport {
 		return parameters;
 	}
 	
-	private boolean validateOperands(Text firstOperandText, Text secondOperandText) {
-		return !firstOperandText.getText().matches("[0-9]+") || !secondOperandText.getText().matches("[0-9]+");
+	private void validateOperands(Text firstOperandText, Text secondOperandText) {
+		if (!firstOperandText.getText().matches("[0-9]+") || !secondOperandText.getText().matches("[0-9]+")) {
+			throw new InvalidInputException("invalid input");
+		}
 	}
 }
