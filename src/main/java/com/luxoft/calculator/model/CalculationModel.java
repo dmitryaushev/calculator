@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.luxoft.calculator.service.Observable;
-import com.luxoft.calculator.service.Observer;
+import com.luxoft.calculator.interfaces.Observable;
+import com.luxoft.calculator.interfaces.Observer;
 
 public class CalculationModel implements Observable{
 

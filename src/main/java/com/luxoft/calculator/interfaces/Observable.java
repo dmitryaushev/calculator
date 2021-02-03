@@ -1,4 +1,4 @@
-package com.luxoft.calculator.service;
+package com.luxoft.calculator.interfaces;
 
 import java.util.Map;
 
