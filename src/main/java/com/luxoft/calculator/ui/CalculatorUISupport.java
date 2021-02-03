@@ -19,29 +19,36 @@ public class CalculatorUISupport {
 	private CalculatorUI calculatorUI;
 	private ModelManager modelManager;
 
+	private Text firstOperand;
+	private Text secondOperand;
+	private Text resultText;
+	private Combo operationSymbol;
+	private Button checkBox;
+	private Button calculateButton;
+
 	public CalculatorUISupport(CalculatorUI calculatorUI) {
 		this.calculatorUI = calculatorUI;
 		this.modelManager = ModelManager.getInstance();
 	}
 
 	public void createCalculatorListeners() {
-		
-		Text firstOperand  = calculatorUI.getFirstOperand();
-		Text secondOperand = calculatorUI.getSecondOperand();
-		Text resultText = calculatorUI.getResultText();
-		Combo operations = calculatorUI.getOperations();
-		Button checkBox = calculatorUI.getCheckBox();
-		Button calculateButton = calculatorUI.getCalculateButton();
+
+		firstOperand = calculatorUI.getFirstOperand();
+		secondOperand = calculatorUI.getSecondOperand();
+		resultText = calculatorUI.getResultText();
+		operationSymbol = calculatorUI.getOperations();
+		checkBox = calculatorUI.getCheckBox();
+		calculateButton = calculatorUI.getCalculateButton();
 
 		calculateButton.addSelectionListener(widgetSelectedAdapter(event -> {
-			event(firstOperand, secondOperand, operations, resultText);
+			dataProcessing();
 		}));
 
 		checkBox.addSelectionListener(widgetSelectedAdapter(event -> {
 			if (checkBox.getSelection()) {
 				calculateButton.setEnabled(false);
 				if (!firstOperand.getText().isEmpty() && !secondOperand.getText().isEmpty()) {
-					event(firstOperand, secondOperand, operations, resultText);
+					dataProcessing();
 				}
 			} else {
 				calculateButton.setEnabled(true);
@@ -52,7 +59,7 @@ public class CalculatorUISupport {
 		firstOperand.addListener(SWT.KeyUp, event -> {
 			if (checkBox.getSelection()) {
 				if (!secondOperand.getText().isEmpty()) {
-					event(firstOperand, secondOperand, operations, resultText);
+					dataProcessing();
 				}
 			}
 		});
@@ -60,41 +67,33 @@ public class CalculatorUISupport {
 		secondOperand.addListener(SWT.KeyUp, event -> {
 			if (checkBox.getSelection()) {
 				if (!firstOperand.getText().isEmpty()) {
-					event(firstOperand, secondOperand, operations, resultText);
+					dataProcessing();
 				}
 			}
 		});
 
-		operations.addListener(SWT.Selection, event -> {
+		operationSymbol.addListener(SWT.Selection, event -> {
 			if (checkBox.getSelection()) {
-				event(firstOperand, secondOperand, operations, resultText);
+				dataProcessing();
 			}
 		});
 	}
-	
-	private void event(Text firstOperand, Text secondOperand, Combo operations, Text resultText) {
-		
+
+	private void dataProcessing() {
 		try {
-			String firstOperandString = firstOperand.getText();
-			String secondOperandString = secondOperand.getText();
-			String operationSymbolString = operations.getText();
-			
-			ValidationService.validateOperands(firstOperandString, secondOperandString);
-			
-			Map<String, String> parameters = mapParameters(firstOperandString, secondOperandString, operationSymbolString);
+			ValidationService.validateOperands(firstOperand.getText(), secondOperand.getText());
+			Map<String, String> parameters = mapParameters();
 			modelManager.updateModelFromUI(parameters);
-			
 		} catch (InvalidInputException e) {
 			resultText.setText(String.valueOf(e.getMessage()));
 		}
 	}
 
-	private Map<String, String> mapParameters(String firstOperand, String secondOperand, String operationSymbol) {
+	private Map<String, String> mapParameters() {
 		Map<String, String> parameters = new HashMap<>();
-		parameters.put("firstOperand", firstOperand);
-		parameters.put("secondOperand", secondOperand);
-		parameters.put("operationSymbol", operationSymbol);
+		parameters.put("firstOperand", firstOperand.getText());
+		parameters.put("secondOperand", secondOperand.getText());
+		parameters.put("operationSymbol", operationSymbol.getText());
 		return parameters;
 	}
-
 }
