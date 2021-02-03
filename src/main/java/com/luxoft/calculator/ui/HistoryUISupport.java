@@ -17,7 +17,7 @@ public class HistoryUISupport {
 		
 		Button clear = historyUI.getClear();
 		clear.addSelectionListener(widgetSelectedAdapter(event -> {
-			historyUI.getHistory().setItems(new String[0]);
+			historyUI.getHistory().removeAll();
 		}));
 	}
 }

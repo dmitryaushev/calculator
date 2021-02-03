@@ -1,16 +1,14 @@
 package com.luxoft.calculator.service;
 
-import com.luxoft.calculator.model.CalculationModel;
-
 public interface SimpleCalculator {
 
-	double addition(CalculationModel operation);
+	double addition(Double firstOperand, Double secondOperand);
 
-	double subtraction(CalculationModel operation);
+	double subtraction(Double firstOperand, Double secondOperand);
 
-	double multiplication(CalculationModel operation);
+	double multiplication(Double firstOperand, Double secondOperand);
 
-	double division(CalculationModel operation);
+	double division(Double firstOperand, Double secondOperand);
 	
-	double calculate(CalculationModel operation);
+	double calculate(Double firstOperand, Double secondOperand, String operationSymbol);
 }

@@ -1,5 +1,7 @@
 package com.luxoft.calculator.model;
 
+import java.util.Map;
+
 import com.luxoft.calculator.service.CalculationService;
 import com.luxoft.calculator.service.impl.SimpleCalculatorImpl;
 
@@ -11,8 +13,8 @@ public class ModelManager {
 	private CalculationService calculationService;
 	
 	public void createModel() {
-		calculationModel = new CalculationModel();
 		calculationService = new CalculationService(new SimpleCalculatorImpl());
+		calculationModel = new CalculationModel();
 		calculationModel.addObserver(calculationService);
 	}
 	
@@ -25,5 +27,9 @@ public class ModelManager {
 
 	public CalculationModel getCalculationModel() {
 		return calculationModel;
+	}
+	
+	public void updateModelFromUI(Map<String, String> parameters) {
+		calculationModel.setParameters(parameters);
 	}
 }

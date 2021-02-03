@@ -11,17 +11,16 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 
 import com.luxoft.calculator.exception.InvalidInputException;
-import com.luxoft.calculator.model.CalculationModel;
 import com.luxoft.calculator.model.ModelManager;
 
 public class CalculatorUISupport {
 
 	private CalculatorUI calculatorUI;
-	private CalculationModel calculationModel;
+	private ModelManager modelManager;
 
 	public CalculatorUISupport(CalculatorUI calculatorUI) {
 		this.calculatorUI = calculatorUI;
-		this.calculationModel = ModelManager.getInstance().getCalculationModel();
+		this.modelManager = ModelManager.getInstance();
 	}
 
 	public void createCalculatorListeners() {
@@ -37,7 +36,7 @@ public class CalculatorUISupport {
 			try {
 				validateOperands(firstOperand, secondOperand);					
 				Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-				calculationModel.setParameters(parameters);
+				modelManager.updateModelFromUI(parameters);
 			} catch (InvalidInputException e) {
 				resultText.setText(String.valueOf(e.getMessage()));
 			}
@@ -50,7 +49,7 @@ public class CalculatorUISupport {
 					try {
 						validateOperands(firstOperand, secondOperand);					
 						Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-						calculationModel.setParameters(parameters);
+						modelManager.updateModelFromUI(parameters);
 					} catch (InvalidInputException e) {
 						resultText.setText(String.valueOf(e.getMessage()));
 					}
@@ -67,7 +66,7 @@ public class CalculatorUISupport {
 					try {
 						validateOperands(firstOperand, secondOperand);					
 						Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-						calculationModel.setParameters(parameters);
+						modelManager.updateModelFromUI(parameters);
 					} catch (InvalidInputException e) {
 						resultText.setText(String.valueOf(e.getMessage()));
 					}
@@ -81,7 +80,7 @@ public class CalculatorUISupport {
 					try {
 						validateOperands(firstOperand, secondOperand);					
 						Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-						calculationModel.setParameters(parameters);
+						modelManager.updateModelFromUI(parameters);
 					} catch (InvalidInputException e) {
 						resultText.setText(String.valueOf(e.getMessage()));
 					}
@@ -94,7 +93,7 @@ public class CalculatorUISupport {
 				try {
 					validateOperands(firstOperand, secondOperand);					
 					Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-					calculationModel.setParameters(parameters);
+					modelManager.updateModelFromUI(parameters);
 				} catch (InvalidInputException e) {
 					resultText.setText(String.valueOf(e.getMessage()));
 				}

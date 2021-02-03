@@ -1,45 +1,44 @@
 package com.luxoft.calculator.service.impl;
 
-import com.luxoft.calculator.model.CalculationModel;
 import com.luxoft.calculator.service.SimpleCalculator;
 
 public class SimpleCalculatorImpl implements SimpleCalculator {
 
 	@Override
-	public double addition(CalculationModel operation) {
-		return operation.getFirstOperand() + operation.getSecondOperand();
+	public double addition(Double firstOperand, Double secondOperand) {
+		return firstOperand + secondOperand;
 	}
 
 	@Override
-	public double subtraction(CalculationModel operation) {
-		return operation.getFirstOperand() - operation.getSecondOperand();
+	public double subtraction(Double firstOperand, Double secondOperand) {
+		return firstOperand - secondOperand;
 	}
 
 	@Override
-	public double multiplication(CalculationModel operation) {
-		return operation.getFirstOperand() * operation.getSecondOperand();
+	public double multiplication(Double firstOperand, Double secondOperand) {
+		return firstOperand * secondOperand;
 	}
 
 	@Override
-	public double division(CalculationModel operation) {
-		return operation.getFirstOperand() / operation.getSecondOperand();
+	public double division(Double firstOperand, Double secondOperand) {
+		return firstOperand / secondOperand;
 	}
 
 	@Override
-	public double calculate(CalculationModel operation) {
+	public double calculate(Double firstOperand, Double secondOperand, String operationSymbol) {
 		double result = 0;
-		switch (operation.getOperationSymbol()) {
+		switch (operationSymbol) {
 		case "+":
-			result = addition(operation);
+			result = addition(firstOperand, secondOperand);
 			break;
 		case "-":
-			result = subtraction(operation);
+			result = subtraction(firstOperand, secondOperand);
 			break;
 		case "*":
-			result = multiplication(operation);
+			result = multiplication(firstOperand, secondOperand);
 			break;
 		case "/":
-			result = division(operation);
+			result = division(firstOperand, secondOperand);
 			break;
 		}
 		return result;
