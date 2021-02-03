@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Text;
 
 import com.luxoft.calculator.exception.InvalidInputException;
 import com.luxoft.calculator.model.ModelManager;
+import com.luxoft.calculator.service.ValidationService;
 
 public class CalculatorUISupport {
 
@@ -33,26 +34,14 @@ public class CalculatorUISupport {
 		Button calculateButton = calculatorUI.getCalculateButton();
 
 		calculateButton.addSelectionListener(widgetSelectedAdapter(event -> {
-			try {
-				validateOperands(firstOperand, secondOperand);					
-				Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-				modelManager.updateModelFromUI(parameters);
-			} catch (InvalidInputException e) {
-				resultText.setText(String.valueOf(e.getMessage()));
-			}
+			event(firstOperand, secondOperand, operations, resultText);
 		}));
 
 		checkBox.addSelectionListener(widgetSelectedAdapter(event -> {
 			if (checkBox.getSelection()) {
 				calculateButton.setEnabled(false);
 				if (!firstOperand.getText().isEmpty() && !secondOperand.getText().isEmpty()) {
-					try {
-						validateOperands(firstOperand, secondOperand);					
-						Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-						modelManager.updateModelFromUI(parameters);
-					} catch (InvalidInputException e) {
-						resultText.setText(String.valueOf(e.getMessage()));
-					}
+					event(firstOperand, secondOperand, operations, resultText);
 				}
 			} else {
 				calculateButton.setEnabled(true);
@@ -63,13 +52,7 @@ public class CalculatorUISupport {
 		firstOperand.addListener(SWT.KeyUp, event -> {
 			if (checkBox.getSelection()) {
 				if (!secondOperand.getText().isEmpty()) {
-					try {
-						validateOperands(firstOperand, secondOperand);					
-						Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-						modelManager.updateModelFromUI(parameters);
-					} catch (InvalidInputException e) {
-						resultText.setText(String.valueOf(e.getMessage()));
-					}
+					event(firstOperand, secondOperand, operations, resultText);
 				}
 			}
 		});
@@ -77,41 +60,41 @@ public class CalculatorUISupport {
 		secondOperand.addListener(SWT.KeyUp, event -> {
 			if (checkBox.getSelection()) {
 				if (!firstOperand.getText().isEmpty()) {
-					try {
-						validateOperands(firstOperand, secondOperand);					
-						Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-						modelManager.updateModelFromUI(parameters);
-					} catch (InvalidInputException e) {
-						resultText.setText(String.valueOf(e.getMessage()));
-					}
+					event(firstOperand, secondOperand, operations, resultText);
 				}
 			}
 		});
 
 		operations.addListener(SWT.Selection, event -> {
 			if (checkBox.getSelection()) {
-				try {
-					validateOperands(firstOperand, secondOperand);					
-					Map<String, String> parameters = mapParameters(firstOperand, secondOperand, operations);
-					modelManager.updateModelFromUI(parameters);
-				} catch (InvalidInputException e) {
-					resultText.setText(String.valueOf(e.getMessage()));
-				}
+				event(firstOperand, secondOperand, operations, resultText);
 			}
 		});
 	}
-
-	private Map<String, String> mapParameters(Text firstOperandText, Text secondOperandText, Combo operations) {
-		Map<String, String> parameters = new HashMap<>();
-		parameters.put("firstOperand", firstOperandText.getText());
-		parameters.put("secondOperand", secondOperandText.getText());
-		parameters.put("operationSymbol", operations.getText());
-		return parameters;
-	}
 	
-	private void validateOperands(Text firstOperandText, Text secondOperandText) {
-		if (!firstOperandText.getText().matches("[0-9]+") || !secondOperandText.getText().matches("[0-9]+")) {
-			throw new InvalidInputException("invalid input");
+	private void event(Text firstOperand, Text secondOperand, Combo operations, Text resultText) {
+		
+		try {
+			String firstOperandString = firstOperand.getText();
+			String secondOperandString = secondOperand.getText();
+			String operationSymbolString = operations.getText();
+			
+			ValidationService.validateOperands(firstOperandString, secondOperandString);
+			
+			Map<String, String> parameters = mapParameters(firstOperandString, secondOperandString, operationSymbolString);
+			modelManager.updateModelFromUI(parameters);
+			
+		} catch (InvalidInputException e) {
+			resultText.setText(String.valueOf(e.getMessage()));
 		}
 	}
+
+	private Map<String, String> mapParameters(String firstOperand, String secondOperand, String operationSymbol) {
+		Map<String, String> parameters = new HashMap<>();
+		parameters.put("firstOperand", firstOperand);
+		parameters.put("secondOperand", secondOperand);
+		parameters.put("operationSymbol", operationSymbol);
+		return parameters;
+	}
+
 }
