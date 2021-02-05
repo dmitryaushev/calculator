@@ -24,12 +24,6 @@ public class CalculatorUI {
 	private Button calculateButton;
 	private Label resultLabel;
 
-	private GridData operandsData;
-	private GridData checkBoxData;
-	private GridData calculateButtonData;
-	private GridData resultTextData;
-	private GridData resultLabelData;
-
 	public Text getFirstOperand() {
 		return firstOperand;
 	}
@@ -62,7 +56,7 @@ public class CalculatorUI {
 		calculateTab.setText("calculator");
 		calculateTab.setControl(compositeCalculator);
 
-		operandsData = new GridData(GridData.FILL_BOTH);
+		GridData operandsData = new GridData(GridData.FILL_BOTH);
 
 		firstOperand = new Text(compositeCalculator, SWT.BORDER);
 		firstOperand.setLayoutData(operandsData);
@@ -75,7 +69,7 @@ public class CalculatorUI {
 		secondOperand = new Text(compositeCalculator, SWT.BORDER);
 		secondOperand.setLayoutData(operandsData);
 
-		checkBoxData = new GridData(GridData.FILL_BOTH);
+		GridData checkBoxData = new GridData(GridData.FILL_BOTH);
 		checkBoxData.horizontalSpan = 2;
 		checkBoxData.verticalIndent = 100;
 
@@ -85,19 +79,19 @@ public class CalculatorUI {
 
 		calculateButton = new Button(compositeCalculator, SWT.PUSH);
 		calculateButton.setText("calculate");
-		calculateButtonData = new GridData(GridData.FILL_BOTH);
+		GridData calculateButtonData = new GridData(GridData.FILL_BOTH);
 		calculateButtonData.verticalIndent = 100;
 		calculateButton.setLayoutData(calculateButtonData);
 
 		resultLabel = new Label(compositeCalculator, SWT.NONE);
 		resultLabel.setText("result:");
-		resultLabelData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+		GridData resultLabelData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		resultLabelData.verticalIndent = 20;
 		resultLabel.setLayoutData(resultLabelData);
 
 		resultText = new Text(compositeCalculator, SWT.BORDER);
 		resultText.setEditable(false);
-		resultTextData = new GridData(GridData.FILL_BOTH);
+		GridData resultTextData = new GridData(GridData.FILL_BOTH);
 		resultTextData.horizontalSpan = 2;
 		resultTextData.verticalIndent = 20;
 		resultTextData.horizontalIndent = -35;

@@ -8,7 +8,7 @@ public class SimpleCalculator extends AbstractCalculator {
 
 	@Override
 	public double makeCalculation(Double firstOperand, Double secondOperand, String operationSymbol) {
-		return mathOperationMap.get(operationSymbol).calculationResult(firstOperand, secondOperand);
+		return mathOperationMap.get(operationSymbol).calculateResult(firstOperand, secondOperand);
 	}
 
 }

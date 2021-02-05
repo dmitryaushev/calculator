@@ -2,8 +2,8 @@ package com.luxoft.calculator.model;
 
 import java.util.Map;
 
-import com.luxoft.calculator.logic.CalculationService;
 import com.luxoft.calculator.logic.SimpleCalculator;
+import com.luxoft.calculator.service.CalculationService;
 
 public class ModelManager {
 	

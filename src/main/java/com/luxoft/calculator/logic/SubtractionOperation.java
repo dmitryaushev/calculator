@@ -5,7 +5,7 @@ import com.luxoft.calculator.interfaces.MathOperation;
 public class SubtractionOperation implements MathOperation {
 
 	@Override
-	public double calculationResult(Double firstOperand, Double secondOperand) {
+	public double calculateResult(Double firstOperand, Double secondOperand) {
 		return firstOperand - secondOperand;
 	}
 

@@ -1,6 +1,7 @@
-package com.luxoft.calculator.logic;
+package com.luxoft.calculator.service;
 
 import com.luxoft.calculator.interfaces.Observer;
+import com.luxoft.calculator.logic.SimpleCalculator;
 import com.luxoft.calculator.ui.ViewManager;
 
 public class CalculationService implements Observer{

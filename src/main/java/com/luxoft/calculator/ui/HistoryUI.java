@@ -17,8 +17,6 @@ public class HistoryUI {
 	private List history;
 	private Button clear;
 
-	private GridData historyData;
-
 	public Button getClear() {
 		return clear;
 	}
@@ -36,7 +34,7 @@ public class HistoryUI {
 		historyTab.setControl(compositeHistory);
 
 		history = new List(compositeHistory, SWT.BORDER | SWT.V_SCROLL);
-		historyData = new GridData(GridData.FILL_BOTH);
+		GridData historyData = new GridData(GridData.FILL_BOTH);
 		history.setLayoutData(historyData);
 
 		clear = new Button(compositeHistory, SWT.PUSH);

@@ -23,16 +23,16 @@ public class ViewManager {
 		CTabFolder folder = new CTabFolder(shell, SWT.BORDER);
 		folder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		this.modelManager = ModelManager.getInstance();
+		modelManager = ModelManager.getInstance();
 		modelManager.createModel();	
 		
-		this.calculatorUI = new CalculatorUI();
-		this.calculatorUISupport = new CalculatorUISupport(calculatorUI);
+		calculatorUI = new CalculatorUI();
+		calculatorUISupport = new CalculatorUISupport(calculatorUI);
 		calculatorUI.createCalculatorUI(folder);
 		calculatorUISupport.createCalculatorListeners();
 		
-		this.historyUI = new HistoryUI();
-		this.historyUISupport = new HistoryUISupport(historyUI);
+		historyUI = new HistoryUI();
+		historyUISupport = new HistoryUISupport(historyUI);
 		historyUI.createHistotyUI(folder);
 		historyUISupport.createHistoryListeners();
 		

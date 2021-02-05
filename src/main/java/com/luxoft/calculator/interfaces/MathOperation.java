@@ -7,5 +7,5 @@ public interface MathOperation {
 	final String MULTIPLICATION = "*";
 	final String DIVISION = "/";
 	
-	double calculationResult(Double firstOperand, Double secondOperand);
+	double calculateResult(Double firstOperand, Double secondOperand);
 }
