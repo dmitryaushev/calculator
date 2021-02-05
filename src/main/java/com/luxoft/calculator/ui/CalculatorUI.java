@@ -60,7 +60,7 @@ public class CalculatorUI {
 		calculateTab.setText("calculator");
 		calculateTab.setControl(compositeCalculator);
 
-		GridData operandsData = new GridData(GridData.FILL_BOTH);
+		GridData operandsData = new GridData(GridData.FILL_HORIZONTAL);
 
 		firstOperand = new Text(compositeCalculator, SWT.BORDER);
 		firstOperand.setLayoutData(operandsData);
