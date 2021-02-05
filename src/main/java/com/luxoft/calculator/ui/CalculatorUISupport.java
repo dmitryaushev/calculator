@@ -29,9 +29,10 @@ public class CalculatorUISupport {
 	public CalculatorUISupport(CalculatorUI calculatorUI) {
 		this.calculatorUI = calculatorUI;
 		this.modelManager = ModelManager.getInstance();
+		createCalculatorListeners();
 	}
 
-	public void createCalculatorListeners() {
+	private void createCalculatorListeners() {
 
 		firstOperand = calculatorUI.getFirstOperand();
 		secondOperand = calculatorUI.getSecondOperand();

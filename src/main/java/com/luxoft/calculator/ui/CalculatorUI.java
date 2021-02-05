@@ -23,6 +23,10 @@ public class CalculatorUI {
 	private Button checkBox;
 	private Button calculateButton;
 	private Label resultLabel;
+	
+	public CalculatorUI(CTabFolder parent) {
+		createCalculatorUI(parent);
+	}
 
 	public Text getFirstOperand() {
 		return firstOperand;
@@ -48,7 +52,7 @@ public class CalculatorUI {
 		return calculateButton;
 	}
 
-	public void createCalculatorUI(CTabFolder parent) {
+	private void createCalculatorUI(CTabFolder parent) {
 
 		compositeCalculator = new Composite(parent, SWT.NONE);
 		compositeCalculator.setLayout(new GridLayout(3, false));

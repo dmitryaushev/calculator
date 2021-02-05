@@ -17,6 +17,10 @@ public class HistoryUI {
 	private List history;
 	private Button clear;
 
+	public HistoryUI(CTabFolder parent) {
+		createHistotyUI(parent);
+	}
+
 	public Button getClear() {
 		return clear;
 	}
@@ -25,7 +29,7 @@ public class HistoryUI {
 		return history;
 	}
 	
-	public void createHistotyUI(CTabFolder parent) {
+	private void createHistotyUI(CTabFolder parent) {
 
 		compositeHistory = new Composite(parent, SWT.NONE);
 		compositeHistory.setLayout(new GridLayout());

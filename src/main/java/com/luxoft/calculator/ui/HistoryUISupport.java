@@ -11,9 +11,10 @@ public class HistoryUISupport {
 	public HistoryUISupport(HistoryUI historyUI) {
 		super();
 		this.historyUI = historyUI;
+		createHistoryListeners();
 	}
 
-	public void createHistoryListeners() {
+	private void createHistoryListeners() {
 		
 		Button clear = historyUI.getClear();
 		clear.addSelectionListener(widgetSelectedAdapter(event -> {

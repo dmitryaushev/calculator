@@ -26,16 +26,11 @@ public class ViewManager {
 		modelManager = ModelManager.getInstance();
 		modelManager.createModel();	
 		
-		calculatorUI = new CalculatorUI();
+		calculatorUI = new CalculatorUI(folder);
 		calculatorUISupport = new CalculatorUISupport(calculatorUI);
-		calculatorUI.createCalculatorUI(folder);
-		calculatorUISupport.createCalculatorListeners();
 		
-		historyUI = new HistoryUI();
-		historyUISupport = new HistoryUISupport(historyUI);
-		historyUI.createHistotyUI(folder);
-		historyUISupport.createHistoryListeners();
-		
+		historyUI = new HistoryUI(folder);
+		historyUISupport = new HistoryUISupport(historyUI);	
 	}
 
 	public static ViewManager getInstance() {
